@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Repository</title>
+<script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
+<script type="text/javascript" src="lib/url-template/url-template.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+<script type="text/javascript" src="apigClient.js"></script>
+</head>
+<body>
+
+<h1>Search and Upload Photos</h1>
+
+<div>
+  <h2>Search Photos</h2>
+  <input type="text" id="searchQuery" placeholder="Search for photos">
+  <button onclick="searchPhotos()">Search</button>
+</div>
+
+<div id="searchResults">
+  <h2>Results</h2>
+  <!-- Search results will be displayed here -->
+</div>
+
+<div>
+  <h2>Upload Photos</h2>
+  <form id="uploadForm">
+    <input type="file" id="photoUpload" accept="image/*">
+    <input type="text" id="customLabels" placeholder="Custom Labels (comma-separated)">
+    <button type="submit">Upload</button>
+  </form>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
