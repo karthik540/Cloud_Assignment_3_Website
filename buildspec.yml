@@ -13,12 +13,12 @@ phases:
     commands:
       - ls
       - echo Zipping LF1
-      - cd lambda/lf1
-      - zip -r ../LF1.zip *
+      - cd Lambda-Code
+      - zip -r ../LF1.zip LF1.py
       - aws s3 cp ../LF1.zip s3://code-pipeline-bucket-540
       - echo Zipping search-photos
-      - cd ../search-photos
-      - zip -r ../search-photos.zip *
+      # - cd ../search-photos
+      - zip -r ../search-photos.zip search-photos.py
       - aws s3 cp ../search-photos.zip s3://code-pipeline-bucket-540
 
   post_build:
