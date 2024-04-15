@@ -15,14 +15,14 @@ phases:
       - echo Zipping LF1
       - cd lambda/lf1
       - zip -r ../LF1.zip *
-      - aws s3 cp ../LF1.zip s3://b1-cdpipe
+      - aws s3 cp ../LF1.zip s3://code-pipeline-bucket-540
       - echo Zipping search-photos
       - cd ../search-photos
       - zip -r ../search-photos.zip *
-      - aws s3 cp ../search-photos.zip s3://b1-cdpipe
+      - aws s3 cp ../search-photos.zip s3://code-pipeline-bucket-540
 
   post_build:
     commands:
       - echo Updating Lambda function Code
-      - aws lambda update-function-code --function-name LF1 --s3-bucket b1-cdpipe --s3-key LF1.zip
-      - aws lambda update-function-code --function-name search-photos --s3-bucket b1-cdpipe --s3-key search-photos.zip
+      - aws lambda update-function-code --function-name LF1 --s3-bucket code-pipeline-bucket-540 --s3-key LF1.zip
+      - aws lambda update-function-code --function-name search-photos --s3-bucket code-pipeline-bucket-540 --s3-key search-photos.zip
