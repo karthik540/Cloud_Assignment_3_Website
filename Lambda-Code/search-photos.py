@@ -7,6 +7,8 @@ from pip._vendor import requests
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
+# Added a comment
+
 # Initialize Lex client
 lex_client = boto3.client('lexv2-runtime')
 
