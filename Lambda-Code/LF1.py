@@ -10,6 +10,8 @@ import base64
 s3 = boto3.client('s3')
 rekognition = boto3.client('rekognition')
 
+# Added a comment
+
 # Elasticsearch config
 ES_URL = "https://search-photos-y2ghq7tpe3y4dciyevicpetcjq.aos.us-east-1.on.aws"
 ES_INDEX = 'photos'  # Update with your Elasticsearch index name
