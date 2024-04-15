@@ -1,9 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      python: 3.11
 
   pre_build:
     commands:
@@ -17,7 +14,7 @@ phases:
       - zip -r indexing-lambda.zip lambda_function.py
       - aws s3 cp indexing-lambda.zip s3://code-pipeline-bucket-540
       - echo Zipping Search Photos Lambda function
-      - cd Lambda-Code/SearchPhotos-Code
+      - cd ../SearchPhotos-Code
       - zip -r search-photos-lambda.zip lambda_function.py
       - aws s3 cp search-photos-lambda.zip s3://code-pipeline-bucket-540
 
