@@ -22,8 +22,6 @@ host = ES_URL
 region = 'us-east-1'
 
 def lambda_handler(event, context):
-    
-    
     print("EVENT")
     print(event)
     # Function to extract labels
@@ -86,23 +84,21 @@ def lambda_handler(event, context):
         return labels
         
     def get_image_path(labels):
-        img_paths = []
         unique_labels = []
         for x in labels:
             if x not in unique_labels:
                 unique_labels.append(x)
                 
         labels = unique_labels
-        #print("inside get photo path", labels)
         
         return_response = []
         
-        for i in labels:
-            labels_cus = [i]
-            label_content = {
+        for label in labels:
+            labels_cus = [label]
+            label_dictionary = {
                 "labels": labels_cus
             }
-            path = host + '/_search?q=labels:'+i
+            path = host + '/_search?q=labels:'+label
             print(path)
             response = requests.get(path, headers=headers,
                                 auth=(ES_USER, ES_PASSWORD))
@@ -115,39 +111,31 @@ def lambda_handler(event, context):
             
             for k in range(0, hits_count):
                 img_obj = dict1["hits"]["hits"]
-                img_bucket = dict1["hits"]["hits"][k]["_source"]["bucket"]
-                #print("img_bucket", img_bucket)
-                img_name = dict1["hits"]["hits"][k]["_source"]["objectKey"]
-                #print("img_name", img_name)
-                
-                img_link = 'https://s3.amazonaws.com/' + \
-                str(img_bucket) + '/' + str(img_name)
-                #print(img_link)
-                img_paths.append(img_link)
-                label_content['url'] = img_link
+                bucket_name = dict1["hits"]["hits"][k]["_source"]["bucket"]
+                key_name = dict1["hits"]["hits"][k]["_source"]["objectKey"]
+                img_link = 'https://s3.amazonaws.com/' + str(bucket_name) + '/' + str(key_name)
+                label_dictionary['url'] = img_link
                 break
-            return_response.append(label_content)
-                
-        print(f'Image Response = {return_response}')
+            return_response.append(label_dictionary)
+            
         return return_response
     
     # Get labels from the query
-    q1 = event["multiValueQueryStringParameters"]["q"]
-    print(q1)
-    labels_response = get_labels(q1)
+    query = event["multiValueQueryStringParameters"]["q"]
+    print(query)
+    get_labels_response = get_labels(query)
     
     
-    if len(labels_response) == 0:
+    if len(get_labels_response) == 0:
         return
     else:
-        return_response = get_image_path(labels_response)
+        return_response = get_image_path(get_labels_response)
         
     final_response = {
         "result" : return_response
     }
 
     
-    # Construct and return the response
     return {
         'headers': {
             'Access-Control-Allow-Headers': 'Content-Type',
