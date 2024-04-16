@@ -8,4 +8,4 @@ phases:
   post_build:
     commands:
       - echo "Deploying frontend to S3..."
-      - aws s3 sync Website-Code/ s3://b1-ass3 
+      - aws s3 sync Cloud_Assignment_3_Website/Website-Code/ s3://b1-ass3 
